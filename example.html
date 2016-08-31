@@ -1,0 +1,83 @@
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>N1 Audio Object Example</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <h3>Now playing</h3>
+    <h1 id="title">Waiting for your radio</h1>
+
+    <audio src="http://aovivo.radiotimbira.ma.gov.br:8000/timbira" id="x145od00"></audio>
+    <button type="button" class="btn btn-primary" id="play">Play</button>
+    <button type="button" class="btn btn-warning" id="pause">Pause</button>
+    <button type="button" class="btn btn-danger" id="stop">Stop</button>
+
+    &nbsp; | &nbsp;
+
+    <button type="button" class="btn btn-danger" id="change">Change Track</button>
+    
+</body>
+
+    <script src="n1audioobject.js"></script>
+
+    <script>
+        var radios = {
+            'energy': {
+                title: 'Radio Energy',
+                src: 'http://stream.radioreklama.bg:80/nrj.ogg'
+            },
+            'fm42': {
+                title: '42fm radio station',
+                src: 'http://listen.42fm.ru:8000/stealkill-3.0.ogg'
+            }
+        };
+
+        window.addEventListener("load", function load(event){
+            var r = new N1AudioObject('#x145od00');
+
+            var currentRadioName = radios.energy.title;
+            r.setSource(radios.energy.src);
+
+            document.querySelector('#play').addEventListener('click', function() {
+                changeRadioName(currentRadioName);
+                r.play();
+            });
+
+            document.querySelector('#pause').addEventListener('click', function() {
+                r.pause();
+            });
+
+            document.querySelector('#stop').addEventListener('click', function() {
+                r.stop();
+            });
+
+            document.querySelector('#change').addEventListener('click', function() {
+                var currentRadioName = radios.fm42.title;
+                changeRadioName(currentRadioName);
+                
+                r.setSource(radios.fm42.src);
+                r.stop();
+                r.play();
+            });
+        });
+
+        function changeRadioName(name) {
+            
+            document.querySelector('#title').innerHTML = name;
+        }
+    </script>
+</body>
+
+</html>
+
+
+<script>
+</script>
